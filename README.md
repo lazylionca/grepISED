@@ -12,7 +12,7 @@ or from whatever repository you use (I use ~~arch~~ manjaro, btw)
 Installation:
 Just download the file, move it to your working folder and make it executable:
 
-    chmod a+r grepISED.sh
+    chmod a+x grepISED.sh
 
 Then install pdfgrep.
 
