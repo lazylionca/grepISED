@@ -1,8 +1,8 @@
 # grepISED
 A bash script to extract information from Canadian ISED PDFs for Licensed PTP radios.
 
-requires sh, ash, or bash or similar, so linux or mobaxterm
-requires pdfgrep: https://pdfgrep.org/
+- requires sh, ash, or bash or similar, so linux or mobaxterm  
+- requires pdfgrep: https://pdfgrep.org/
     
     sudo apt-get install pdfgrep
 
