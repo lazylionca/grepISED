@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
-# Extracts useful info from single channel ISED PDFs.
+# Extracts useful info from ISED Application PDFs.
 # Created Mar 9, 2022 - Roy
-# updated July 31, 2023 - Roy
+# updated Aug 1, 2023 - Roy
 
 # requires pdfgrep
 # https://pdfgrep.org/
@@ -35,7 +35,7 @@ echo "Parsing $f"
 
 # client name
 e="Client Reference"
-line=$(pdfgrep -i "$e" $f)
+line=$(pdfgrep -i "$e" "$f")
 cr=$( echo ${line:${#e}+1} | xargs)
 t="ISED_$cr.txt"
 echo "Target file: $t"
@@ -44,26 +44,26 @@ echo Link Name: $cr >> $t
 
 
 e="Circuit length"
-line=$(pdfgrep -i "$e" $f | xargs)
+line=$(pdfgrep -i "$e" "$f" | xargs)
 echo Link Distance: ${line:${#e}+1} >> $t
 
 
 # Get the quantity of channel, we'll use this further down
 e="Indicate the initial number of RF channels required"
-l=$(pdfgrep -i "$e" $f | sed -n '1 p' | xargs)
+l=$(pdfgrep -i "$e" "$f" | sed -n '1 p' | xargs)
 ci=${l:${#e}+1} 
 echo Channel Info: $ci >> $t
 echo >>$t
 
 
 e="Municipality and street address or site name"
-s1=$(pdfgrep -i "$e" $f | sed -n '1 p' | xargs)
-s2=$(pdfgrep -i "$e" $f | sed -n '2 p' | xargs)
+s1=$(pdfgrep -i "$e" "$f" | sed -n '1 p' | xargs)
+s2=$(pdfgrep -i "$e" "$f" | sed -n '2 p' | xargs)
 
 
 e="Antenna diameter"
-a1=$(pdfgrep -i "$e" $f | sed -n '1 p' | xargs)
-a2=$(pdfgrep -i "$e" $f | sed -n '2 p' | xargs)
+a1=$(pdfgrep -i "$e" "$f" | sed -n '1 p' | xargs)
+a2=$(pdfgrep -i "$e" "$f" | sed -n '2 p' | xargs)
 
 
 echo Station 1: ${s1:45} >>$t
@@ -107,15 +107,15 @@ do
 	echo Channel $x: >>$t
 
 	e="Lower Frequency \[MHz\]"
-	l=$(pdfgrep -i "$e" $f | sed -n "$x p" | xargs)
+	l=$(pdfgrep -i "$e" "$f" | sed -n "$x p" | xargs)
 	echo Lower Frequency: ${l:22} >>$t
 
 	e="Upper Frequency \[MHz\]"
-	l=$(pdfgrep -i "$e" $f | sed -n "$x p" | xargs)
+	l=$(pdfgrep -i "$e" "$f" | sed -n "$x p" | xargs)
 	echo Upper Frequency: ${l:22} >>$t
 
 	e="Station transmitting on the upper frequency"
-	l=$(pdfgrep -i "$e" $f | sed -n "$x p" | xargs)
+	l=$(pdfgrep -i "$e" "$f" | sed -n "$x p" | xargs)
 	
 	txh="${l: -1}"
 	#txh=${l:44}
@@ -126,7 +126,7 @@ do
 	echo Tx High Site: $s >> $t
 
 	for e in "${a[@]}"; do
-		l=$(pdfgrep "$e" $f | sed -n "$x p" | xargs)
+		l=$(pdfgrep "$e" "$f" | sed -n "$x p" | xargs)
 		echo $e: ${l:${#e}+1} >> $t
 	done
 	
